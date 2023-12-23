@@ -18,3 +18,13 @@ jobs:
             restore-keys: ${{ runner.os }}-m2
         - name: Run tests with Maven
           run: mvn -B test --file pom.xml
+        - name: Merge PR on success
+          if: success()
+          run: |
+            # Set up variables
+            OKEN="${{ secrets.GITHUB_TOKEN }}"
+            BRANCH="${{ github.event.pull_request.head.ref }}"
+            REPO="${{ github.repository }}"
+            API_URL="https://api.github.com/repos/${REPO}/pulls/${{ github.event.pull_request.number }}/merge"   
+            # Use GitHub API to merge the PR with rebase method
+            curl -X PUT -H "Authorization: Bearer ${TOKEN}" -H "Accept: application/vnd.github.v3+json" "${API_URL}?merge_method=rebase"
