@@ -6,7 +6,7 @@ public class L2021112648_7_Test{
     public static void main(String[] args){
         /**
          * 等价类划分
-         * 
+         * test
          * 基本情况
          *  字符串长度为1 "a"
          * 
